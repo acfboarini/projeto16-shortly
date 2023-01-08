@@ -1,4 +1,3 @@
-import db from "../database.js";
 import userRepository from "../repositories/userRepository.js";
 import userService from "../services/userService.js";
 
@@ -31,7 +30,7 @@ export async function signOut(req, res) {
   try {
     await userRepository.deleteSession(token);
     return res.sendStatus(200);
-    
+
   } catch (error) {
     if (error.type) return res.status(error.code).send(error);
     console.log(error);

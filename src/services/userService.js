@@ -6,7 +6,7 @@ import userRepository from "../repositories/userRepository.js";
 async function signUp(data) {
   const { name, email, password } = data;
 
-  const user = userRepository.getUseryEmail(email);
+  const user = await userRepository.getUseryEmail(email);
   if (user) throw errorFactory({ code: 409 });
 
   const salt = 10;
@@ -28,8 +28,42 @@ async function signIn(data) {
   return { username: user.name, token };
 }
 
+async function getUserWithUrls(userId) {
+  const rows = await userRepository.getUserJoinUrls(userId);
+  const { totalViews, shortnedUrls } = assembleUrlData(rows);
+  return {
+    id: rows[0].userId,
+    name: rows[0].name,
+    totalViews,
+    shortnedUrls,
+  };
+}
+
+function assembleUrlData(rows) {
+  const shortnedUrls = [];
+  let totalViews = 0;
+
+  for (let data of rows) {
+    const { urlId, shortUrl, url, views } = data;
+    totalViews += views;
+
+    const url_info = {
+      id: urlId,
+      shortUrl,
+      url,
+      views
+    };
+    shortnedUrls.push(url_info);
+  }
+
+  return {
+    totalViews,
+    shortnedUrls,
+  }
+}
+
 const userService = {
-  signUp, signIn
+  signUp, signIn, getUserWithUrls
 };
 
 export default userService;

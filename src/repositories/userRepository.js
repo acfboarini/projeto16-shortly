@@ -1,3 +1,5 @@
+import db from "../database.js";
+
 async function getUseryEmail(email) {
   const { rows } = await db.query(`
     SELECT * FROM users WHERE email='${email}'
@@ -25,8 +27,20 @@ async function deleteSession(token) {
   `);
 }
 
+async function getUserJoinUrls(userId) {
+  const { rows } = await db.query(`
+    SELECT us.id as "userId", us.name, ur.id as "urlId", ur.url, ur."shortUrl", ur.views
+    FROM users us
+    JOIN urls ur
+    ON us.id = ur."userId"
+    WHERE us.id=${userId}
+    ORDER BY ur.id
+  `);
+  return rows;
+}
+
 const userRepository = {
-  getUseryEmail, insertUser, createSession, deleteSession
+  getUseryEmail, insertUser, createSession, deleteSession, getUserJoinUrls
 }
 
 export default userRepository;
