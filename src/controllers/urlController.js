@@ -97,3 +97,23 @@ export async function deleteUrl(req, res) {
     return res.sendStatus(500);
   }
 }
+
+export async function getRanking(req, res) {
+  try {
+    const { rows: ranking } = await db.query(`
+      SELECT us.id, us.name, COUNT(ur."shortUrl") as "linksCount", SUM(ur.views) as "totalViews"
+      FROM users us
+      JOIN urls ur
+      ON us.id = ur."userId"
+      GROUP BY us.id
+      ORDER BY "totalViews" desc
+      LIMIT 10
+    `);
+    return res.send(ranking);
+    
+  } catch (error) {
+    if (error.type) return res.status(error.code).send(error);
+    console.log(error);
+    return res.sendStatus(500);
+  }
+}
