@@ -8,8 +8,7 @@ export async function postUrl(req, res) {
     return res.status(201).send({ shortUrl });
 
   } catch (error) {
-    if (error.type) return res.status(error.code).send(error);
-    console.log(error);
+    if (error.type) return res.status(error.code).send(error.message);
     return res.sendStatus(500);
   }
 }
@@ -21,8 +20,7 @@ export async function getUrlById(req, res) {
     return res.send(url);
 
   } catch (error) {
-    if (error.type) return res.status(error.code).send(error);
-    console.log(error);
+    if (error.type) return res.status(error.code).send(error.message);
     return res.sendStatus(500);
   }
 }
@@ -34,8 +32,7 @@ export async function redirectUserToUrl(req, res) {
     return res.redirect(url);
 
   } catch (error) {
-    if (error.type) return res.status(error.code).send(error);
-    console.log(error);
+    if (error.type) return res.status(error.code).send(error.message);
     return res.sendStatus(500);
   }
 }
@@ -48,8 +45,7 @@ export async function deleteUrl(req, res) {
     return res.sendStatus(200);
 
   } catch (error) {
-    if (error.type) return res.status(error.code).send(error);
-    console.log(error);
+    if (error.type) return res.status(error.code).send(error.message);
     return res.sendStatus(500);
   }
 }
@@ -60,8 +56,7 @@ export async function getRanking(req, res) {
     return res.send(ranking);
 
   } catch (error) {
-    if (error.type) return res.status(error.code).send(error);
-    console.log(error);
+    if (error.type) return res.status(error.code).send(error.message);
     return res.sendStatus(500);
   }
 }
