@@ -3,25 +3,21 @@ CREATE TABLE "users" (
 	"name" TEXT NOT NULL,
   "email" TEXT UNIQUE NOT NULL,
 	"password" TEXT NOT NULL,
-  "createdAt" TIMESTAMP NOT NULL DEFAULT NOW()
+  "createdAt" TIMESTAMP NOT NULL DEFAULT NOW(),
 );
 
 CREATE TABLE "sessions" (
 	"id" SERIAL PRIMARY KEY,
 	"userId" INT UNIQUE NOT NULL REFERENCES "users"("id"),
   "token" TEXT UNIQUE NOT NULL,
-  "createdAt" TIMESTAMP NOT NULL DEFAULT NOW()
+  "createdAt" TIMESTAMP NOT NULL DEFAULT NOW(),
 );
 
 CREATE TABLE "urls" (
 	"id" SERIAL PRIMARY KEY,
-  "url" TEXT NOT NULL,
-  "createdAt" TIMESTAMP NOT NULL DEFAULT NOW()
-);
-
-CREATE TABLE "users_urls" (
-	"id" SERIAL PRIMARY KEY,
-  "urlId" INT UNIQUE NOT NULL REFERENCES "urls"("id"),
-  "userId" INT UNIQUE NOT NULL REFERENCES "users"("id"),
-  "createdAt" TIMESTAMP NOT NULL DEFAULT NOW()
+  "userId" INT NOT NULL REFERENCES "users"("id"),
+  "url" TEXT UNIQUE NOT NULL,
+  "shortUrl" TEXT UNIQUE NOT NULL,
+  "views" INT NOT NULL DEFAULT 0,
+  "createdAt" TIMESTAMP NOT NULL DEFAULT NOW(),
 );
