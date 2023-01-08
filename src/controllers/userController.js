@@ -7,8 +7,7 @@ export async function getUserWithUrls(req, res) {
     return res.send(user_info);
 
   } catch (error) {
-    if (error.type) return res.status(error.code).send(error);
-    console.log(error);
+    if (error.type) return res.status(error.code).send(error.message);
     return res.sendStatus(500);
   }
 }

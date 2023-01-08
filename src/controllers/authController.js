@@ -7,8 +7,7 @@ export async function signUp(req, res) {
     return res.sendStatus(201);
 
   } catch (error) {
-    if (error.type) return res.status(error.code).send(error);
-    console.log(error);
+    if (error.type) return res.status(error.code).send(error.message);
     return res.sendStatus(500);
   }
 }
@@ -19,8 +18,7 @@ export async function signIn(req, res) {
     return res.status(200).send(sessionData);
 
   } catch (error) {
-    if (error.type) return res.status(error.code).send(error);
-    console.log(error);
+    if (error.type) return res.status(error.code).send(error.message);
     return res.sendStatus(500);
   }
 }
@@ -32,8 +30,7 @@ export async function signOut(req, res) {
     return res.sendStatus(200);
 
   } catch (error) {
-    if (error.type) return res.status(error.code).send(error);
-    console.log(error);
+    if (error.type) return res.status(error.code).send(error.message);
     return res.sendStatus(500);
   }
 }
