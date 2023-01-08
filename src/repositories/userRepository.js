@@ -34,7 +34,7 @@ async function getUserJoinUrls(userId) {
     JOIN urls ur
     ON us.id = ur."userId"
     WHERE us.id=${userId}
-    ORDER BY ur.id
+    ORDER BY ur.views DESC
   `);
   return rows;
 }
